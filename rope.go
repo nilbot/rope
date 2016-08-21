@@ -11,6 +11,7 @@ type Rope interface {
 	isLeaf() bool
 	nonLeaf() bool
 	valid() bool
+	Len() int
 }
 
 // types
@@ -33,12 +34,19 @@ func (r *ropeNode) isLeaf() bool {
 	return r != nil && r.left == nil && r.right == nil
 }
 
+// Len returns the length of the rope
+func (r *ropeNode) Len() int {
+	if r == nil {
+		return 0
+	}
+	return r.length + r.left.Len() + r.right.Len()
+}
+
 func (r *ropeNode) nonLeaf() bool {
 	if r == nil {
 		return false
 	}
-	return (r.left != nil || r.right != nil) &&
-		r.length == r.left.length+r.right.length
+	return r.length == r.left.Len()+r.right.Len()
 }
 
 func (r *ropeNode) valid() bool {
