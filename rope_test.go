@@ -59,6 +59,44 @@ func TestRopesConcatLen(t *testing.T) {
 	}
 }
 
+var ropeConcatCases = []struct {
+	in1  Rope
+	in2  Rope
+	want string
+}{
+	{nilRope, nilRope, ""},
+	{okRope, nilRope, "ok"},
+	{okRope, strRope, "okstr"},
+}
+
+func TestRopesConcat(t *testing.T) {
+	for id, tc := range ropeConcatCases {
+		if tc.in1.concat(tc.in2).String() != tc.want {
+			t.Errorf("concat::%d failed, expected %q, got %q",
+				id, tc.want, tc.in1.concat(tc.in2))
+		}
+	}
+}
+
+var ropeIndexCases = []struct {
+	in   Rope
+	t    int
+	want rune
+}{
+	{okRope, 0, 'o'},
+	{okRope, 1, 'k'},
+	{strRope, 2, 'r'},
+}
+
+func TestRopeIndex(t *testing.T) {
+	for id, tc := range ropeIndexCases {
+		if tc.in.Index(tc.t) != tc.want {
+			t.Errorf("index::%d failed, expected %q, got %q",
+				id, tc.want, tc.in.Index(tc.t))
+		}
+	}
+}
+
 var strRope = &ropeNode{
 	3,
 	&ropeNode{
