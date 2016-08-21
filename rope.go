@@ -12,6 +12,7 @@ type Rope interface {
 	nonLeaf() bool
 	valid() bool
 	Len() int
+	concat(Rope) Rope
 }
 
 // types
@@ -39,7 +40,7 @@ func (r *ropeNode) Len() int {
 	if r == nil {
 		return 0
 	}
-	return r.length + r.left.Len() + r.right.Len()
+	return r.length
 }
 
 func (r *ropeNode) nonLeaf() bool {
@@ -51,4 +52,18 @@ func (r *ropeNode) nonLeaf() bool {
 
 func (r *ropeNode) valid() bool {
 	return r == nil || r.isLeaf() || r.nonLeaf()
+}
+
+// WIP - unbalanced tree + no compression etc.
+// [1,nil,nil,'s'] + [2,[1,nil,nil,'t'],[1,nil,nil,'r'],ignored] = (unbalanced)
+// [3,[1,nil,nil,'s'],[2,[1,nil,nil,'t'],[1,nil,nil,'r'],nil],ignored]
+func (r *ropeNode) concat(other Rope) Rope {
+	if r == nil {
+		return other
+	}
+	if other == nil {
+		return r
+	}
+	newlen := r.Len() + other.Len()
+	return &ropeNode{newlen, r, other.(*ropeNode), ""}
 }

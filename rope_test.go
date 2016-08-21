@@ -40,3 +40,48 @@ func TestRopeLen(t *testing.T) {
 		}
 	}
 }
+
+var lenConcatCases = []struct {
+	in1  Rope
+	in2  Rope
+	want int
+}{
+	{nilRope, nilRope, 0},
+	{okRope, strRope, 5},
+}
+
+func TestRopesConcatLen(t *testing.T) {
+	for id, tc := range lenConcatCases {
+		if tc.in1.concat(tc.in2).Len() != tc.want {
+			t.Errorf("len::%d failed, expected %v, got %v",
+				id, tc.want, tc.in1.concat(tc.in2).Len())
+		}
+	}
+}
+
+var strRope = &ropeNode{
+	3,
+	&ropeNode{
+		1,
+		nil,
+		nil,
+		"s",
+	},
+	&ropeNode{
+		2,
+		&ropeNode{
+			1,
+			nil,
+			nil,
+			"t",
+		},
+		&ropeNode{
+			1,
+			nil,
+			nil,
+			"r",
+		},
+		"",
+	},
+	"",
+}
