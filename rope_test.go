@@ -2,13 +2,6 @@ package rope
 
 import "testing"
 
-var nilRope *ropeNode
-var okRope = &ropeNode{
-	left:   nil,
-	right:  nil,
-	length: 2,
-	data:   "ok",
-}
 var validCases = []struct {
 	in   Rope
 	want bool
@@ -98,6 +91,15 @@ func TestRopeIndex(t *testing.T) {
 	}
 }
 
+// ---- test objects ---- //
+
+var nilRope *ropeNode
+var okRope = &ropeNode{
+	left:   nil,
+	right:  nil,
+	length: 2,
+	data:   "ok",
+}
 var strRope = &ropeNode{
 	3,
 	&ropeNode{
