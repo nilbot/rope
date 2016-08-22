@@ -67,6 +67,7 @@ var ropeConcatCases = []struct {
 	{nilRope, nilRope, ""},
 	{okRope, nilRope, "ok"},
 	{okRope, strRope, "okstr"},
+	{commaRope, okRope, ", ok"},
 }
 
 func TestRopesConcat(t *testing.T) {
@@ -118,6 +119,55 @@ var strRope = &ropeNode{
 			nil,
 			nil,
 			"r",
+		},
+		"",
+	},
+	"",
+}
+
+var commaRope = &ropeNode{
+	2,
+	nil,
+	nil,
+	", ",
+}
+
+var totes = "totes_"
+var safe = "safe_"
+var and = "and_"
+var efficient = "efficient"
+
+var tsae = &ropeNode{
+	0,
+	&ropeNode{
+		11,
+		&ropeNode{
+			6,
+			nil,
+			nil,
+			totes,
+		},
+		&ropeNode{
+			5,
+			nil,
+			nil,
+			safe,
+		},
+		"",
+	},
+	&ropeNode{
+		0,
+		&ropeNode{
+			4,
+			nil,
+			nil,
+			and,
+		},
+		&ropeNode{
+			9,
+			nil,
+			nil,
+			efficient,
 		},
 		"",
 	},

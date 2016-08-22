@@ -15,6 +15,7 @@ type Rope interface {
 	Len() int
 	concat(Rope) Rope
 	Index(int) rune
+	sub(s, e int) (Rope, Rope) // inclusive s, exclusive e
 }
 
 // types
@@ -55,7 +56,13 @@ func (r *ropeNode) Len() int {
 
 // Index returns the rune at index
 func (r *ropeNode) Index(idx int) rune {
-	if idx < 0 || !r.valid() {
+	if !r.valid() {
+		return 0
+	}
+	if r == nil {
+		return 0
+	}
+	if idx < 0 || (r != nil && idx > r.Len()) {
 		return 0
 	}
 	// if idx is greater than left.length, idx = idx - left.length
@@ -110,4 +117,8 @@ func preorderTraversal(r *ropeNode, inputSlice *[]string) {
 		return
 	}
 	preorderTraversal(r.right, inputSlice)
+}
+
+func (r *ropeNode) sub(start, end int) (a, b Rope) {
+	return nil, nil //TODO implement
 }
